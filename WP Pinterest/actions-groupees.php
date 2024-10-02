@@ -18,44 +18,32 @@ function enqueue_pinterest_script() {
             $('body').append('<button id="select-board" style="margin: 10px;">Sélectionner un board Pinterest</button>');
             
             $('body').append(`
-
 <style>
-
 #board-selection-modal button{
-      border: none;
+    border: none;
     background: none;
     padding: 5px;
     font-size: 14px;
     FONT-WEIGHT: 500;
 }
-
 #board-selection-modal button:hover{
-cursor:pointer;
+    cursor:pointer;
 }
-
-
-
 #confirm-board-selection{color: #21c061;}
 #export-csv{color: #384944;}
 #refresh-boards{color:  #245785;}
-#close-board-modal{    
-olor: #dd2626;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-
+#close-board-modal{color: #dd2626; position: absolute; top: 0; right: 0;}
 </style>
-               <div id="board-selection-modal" style="display:none; background-color: white; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; border: 1px solid #ccc; padding: 20px; max-height: 400px; overflow: auto;">
-            <img src="https://kevin-benabdelhak.fr/wp-content/uploads/2024/10/Logo-Pinterest.png" width="120">
-                    <h2>Sélectionnez un tableau</h2>
-                    <select id="boards-list" style="width: 100%; margin-bottom: 10px;"></select>
-                    <button id="refresh-boards">🔄 Rafraîchir</button>
-                    <button id="close-board-modal">❌ Fermer</button>
-                    <button id="export-csv" style="margin-top: 10px;">💾 Exporter</button>
-                    <button id="confirm-board-selection">📢 Publier</button>
-                </div>
+
+<div id="board-selection-modal" style="display:none; background-color: white; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; border: 1px solid #ccc; padding: 20px; max-height: 400px; overflow: auto;">
+    <img src="https://kevin-benabdelhak.fr/wp-content/uploads/2024/10/Logo-Pinterest.png" width="120">
+    <h2>Sélectionnez un tableau</h2>
+    <select id="boards-list" style="width: 100%; margin-bottom: 10px;"></select>
+    <button id="refresh-boards">🔄 Rafraîchir</button>
+    <button id="close-board-modal">❌ Fermer</button>
+    <button id="export-csv" style="margin-top: 10px;">💾 Exporter</button>
+    <button id="confirm-board-selection">📢 Publier</button>
+</div>
             `);
 
             // Fonction pour récupérer les tableaux et les mettre dans la liste d'options
@@ -103,6 +91,11 @@ olor: #dd2626;
                 }
             });
 
+            function transformCSVValue(value) {
+                if (typeof value !== 'string') return value;
+                return value.replace(/,/g, ' ').replace(/'/g, ' ').replace(/'/g, ' ');
+            }
+
             // Gérer le clic sur le bouton "Exporter"
             $('#export-csv').click(function() {
                 var selectedBoard = $('#boards-list').val();
@@ -122,7 +115,7 @@ olor: #dd2626;
                 }
 
                 // Préparation des données pour le CSV
-              var csvData = "Title,Media URL,Pinterest board,Thumbnail,Description,Link,Publish date,Keywords\n"; // En-têtes du CSV
+                var csvData = "Title,Media URL,Pinterest board,Thumbnail,Description,Link,Publish date,Keywords\n"; // En-têtes du CSV
 
                 // Récupérer les détails de chaque média sélectionné
                 selectedMedia.forEach(function(media_id) {
@@ -138,13 +131,11 @@ olor: #dd2626;
                             if (response.success) {
                                 var link = response.data.link ? response.data.link : response.data.media_url;
 
-                              
-                                csvData += `${response.data.title},${response.data.media_url},${$('#boards-list option:selected').text()},"","${response.data.description}",${link},"","test"\n`;
+                                // Transformer et échapper les valeurs
+                                csvData += `${transformCSVValue(response.data.title)},${transformCSVValue(response.data.media_url)},${transformCSVValue($('#boards-list option:selected').text())},"","${transformCSVValue(response.data.description)}",${transformCSVValue(link)},"",""\n`;
 
-                              
                                 console.log("CSV Data:", csvData); // Pour déboguer
-                                
-                           
+
                                 if (media_id === selectedMedia[selectedMedia.length - 1]) {
                                     downloadCSV(csvData);
                                 }
@@ -241,3 +232,4 @@ olor: #dd2626;
     </script>
     <?php
 }
+?>

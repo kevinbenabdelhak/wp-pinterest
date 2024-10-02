@@ -10,7 +10,7 @@ Tested up to: 6.6.2
 
 Requires PHP: 7.0
 
-Stable tag: 1.0
+Stable tag: 1.1
 
 License: GPLv2 or later
 
@@ -55,6 +55,9 @@ WP Pinterest est un plugin qui vous permet de créer des épingles Pinterest à 
    - Entrez vos informations d'API Pinterest pour connecter votre compte.
 
 == Mise à jour ==
+
+= 1.1 =
+* Correction export CSV : Transforme les virgules et apostrophes en espace dans les titres et description
 
 = 1.0 =
 

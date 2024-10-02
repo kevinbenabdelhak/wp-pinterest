@@ -3,7 +3,7 @@
 Plugin Name: WP Pinterest
 Plugin URI: https://kevin-benabdelhak.fr/plugins/wp-pinterest/
 Description: Créez des épingles à partir de vos images dans les actions groupées ou exportez un fichier CSV pour l'importer dans votre compte
-Version: 1.0
+Version: 1.1
 Author: Kevin Benabdelhak
 Author URI: https://kevin-benabdelhak.fr/
 Contributors: kevinbenabdelhak
