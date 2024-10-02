@@ -49,6 +49,9 @@ WP Pinterest est un plugin qui vous permet de créer des épingles Pinterest à 
 
 ## Mise à jour
 
+### 1.1
+* Correction export CSV : Transforme les virgules et apostrophes en espace dans les titres et description
+
 ### 1.0
 
 * Premier lancement du plugin.
